@@ -23,9 +23,10 @@ RUN apt-get update --fix-missing \
     && useradd -m -s /bin/bash ${user} \
     && mkdir -p /home/${user}/www \
 ##Download Qloapps latest version
-    && cd /home/${user}/www && git clone git@github.com:ank241999/qloapp.git \
+    && cd /home/${user}/www && mkdir qloapp 
+COPY /* /home/${user}/www/qloapp
 ##change file permission and ownership
-    && find /home/${user}/www -type f -exec chmod 644 {} \; \
+RUN find /home/${user}/www -type f -exec chmod 644 {} \; \
     && find /home/${user}/www -type d -exec chmod 755 {} \; \
     && chown -R ${user}: /home/${user}/www \
     && sed -i "s@www-data@${user}@g" /etc/apache2/envvars \
