@@ -24,7 +24,7 @@ RUN apt-get update --fix-missing \
     && mkdir -p /home/${user}/www \
 ##Download Qloapps latest version
     && cd /home/${user}/www && mkdir hotelcommerce 
-COPY /* /home/${user}/www/hotelcommerce
+COPY ./ /home/${user}/www/hotelcommerce
 ##change file permission and ownership
 RUN find /home/${user}/www -type f -exec chmod 644 {} \; \
     && find /home/${user}/www -type d -exec chmod 755 {} \; \
