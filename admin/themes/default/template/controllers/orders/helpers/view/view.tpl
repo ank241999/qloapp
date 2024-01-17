@@ -1228,7 +1228,7 @@
 						</div>
 						<div class="col-xs-6 pull-right">
 							<div class="panel panel-vouchers" style="{if !sizeof($discounts)}display:none;{/if}">
-								{if sizeof($discounts)}
+								{if (sizeof($discounts) || $can_edit)}
 									<div class="table-responsive">
 										<table class="table">
 											<thead>
@@ -1259,9 +1259,9 @@
 													{displayPrice price=$discount['value'] currency=$currency->id}
 													</td>
 													{if $can_edit}
-													<td class="text-center">
-														<a class="btn btn-default" href="{$current_index}&amp;submitDeleteVoucher&amp;id_order_cart_rule={$discount['id_order_cart_rule']}&amp;id_order={$order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
-															<i class="icon-trash"></i>
+													<td>
+														<a href="{$current_index}&amp;submitDeleteVoucher&amp;id_order_cart_rule={$discount['id_order_cart_rule']}&amp;id_order={$order->id}&amp;token={$smarty.get.token|escape:'html':'UTF-8'}">
+															<i class="icon-minus-sign"></i>
 															{l s='Delete voucher'}
 														</a>
 													</td>
@@ -1271,8 +1271,6 @@
 											</tbody>
 										</table>
 									</div>
-								{/if}
-								{if $can_edit}
 									<div class="current-edit" id="voucher_form" style="display:none;">
 										{include file='controllers/orders/_discount_form.tpl'}
 									</div>
@@ -2100,8 +2098,7 @@
 		$('.datepicker').datetimepicker({
 			prevText: '',
 			nextText: '',
-			dateFormat: 'yy-mm-dd',
-			timeFormat: 'hh:mm:ss',
+			dateFormat: 'yy-mm-dd ' + hours + ':' + mins + ':' + secs
 		});
 	});
 </script>

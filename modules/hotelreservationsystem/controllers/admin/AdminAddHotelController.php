@@ -124,15 +124,22 @@ class AdminAddHotelController extends ModuleAdminController
         $country = $this->context->country;
         $smartyVars['defaultCountry'] = $country->name[Configuration::get('PS_LANG_DEFAULT')];
 
-        $idCountry = null;
         if ($this->display == 'edit') {
             $idHotel = Tools::getValue('id');
             $hotelBranchInfo = new HotelBranchInformation($idHotel);
 
             $addressInfo = HotelBranchInformation::getAddress($idHotel);
-            $idCountry = Tools::getValue('hotel_country', $addressInfo['id_country']);
+            $statesbycountry = State::getStatesByIdCountry($addressInfo['id_country']);
 
+            $states = array();
+            if ($statesbycountry) {
+                foreach ($statesbycountry as $key => $value) {
+                    $states[$key]['id'] = $value['id_state'];
+                    $states[$key]['name'] = $value['name'];
+                }
+            }
             $smartyVars['edit'] =  1;
+            $smartyVars['state_var'] = $states;
             $smartyVars['address_info'] = $addressInfo;
             $smartyVars['hotel_info'] = (array) $hotelBranchInfo;
             //Hotel Images
@@ -168,17 +175,6 @@ class AdminAddHotelController extends ModuleAdminController
             $smartyVars['order_restrict_date_info'] = $restrictDateInfo;
         }
 
-        // manage state option
-        if ($this->display == 'add') {
-            $idCountry = Tools::getValue('hotel_country');
-        }
-
-        $stateOptions = null;
-        if ($idCountry) {
-            $stateOptions = State::getStatesByIdCountry($idCountry);
-        }
-
-        $smartyVars['state_var'] = $stateOptions;
         $smartyVars['enabledDisplayMap'] =  Configuration::get('WK_GOOGLE_ACTIVE_MAP');
         $smartyVars['ps_img_dir'] = _PS_IMG_.'l/';
 
@@ -604,15 +600,16 @@ class AdminAddHotelController extends ModuleAdminController
 
     public function ajaxProcessStateByCountryId()
     {
-        $response = array('status' => false, 'states' => array());
+        $states = array();
         if ($idCountry = Tools::getValue('id_country')) {
-            if ($states = State::getStatesByIdCountry($idCountry)) {
-                $response['status'] = true;
-                $response['states'] = $states;
+            if ($statesbycountry = State::getStatesByIdCountry($idCountry)) {
+                foreach ($statesbycountry as $key => $value) {
+                    $states[$key]['id'] = $value['id_state'];
+                    $states[$key]['name'] = $value['name'];
+                }
             }
         }
-
-        $this->ajaxDie(json_encode($response));
+        die(json_encode($states));
     }
 
     public function ajaxProcessUploadHotelImages()

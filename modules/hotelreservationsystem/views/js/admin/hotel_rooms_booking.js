@@ -28,8 +28,6 @@ $(document).ready(function() {
                 url: rooms_booking_url,
                 method: 'POST',
                 extraParams: function() {
-                    removeInitializedTooltips();
-
                     return $.extend(
                         {
                             ajax: true,
@@ -183,14 +181,6 @@ $(document).ready(function() {
             }
         });
         calendar.render();
-    }
-
-    function removeInitializedTooltips() {
-        $('#fullcalendar a.day-info, #fullcalendar .fc-daygrid-event').each(function () {
-            if ($(this).data('ui-tooltip')) {
-                $(this).tooltip('destroy');
-            }
-        });
     }
 
     function getSearchData()
@@ -879,12 +869,6 @@ $(document).ready(function() {
                         $("#cartModal").html(result.cart_content);
                     }
                     $("#cart_record").html(result.total_products_in_cart);
-
-                    if (parseInt(result.total_products_in_cart) > 0) {
-                        $('#cart_record').closest('button').removeClass('disabled');
-                    } else {
-                        $('#cart_record').closest('button').addClass('disabled');
-                    }
                 }
             }
         });

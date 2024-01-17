@@ -242,7 +242,7 @@ class HotelHelper
         $WK_HTL_TAG_LINE = array();
         $WK_HTL_SHORT_DESC = array();
         foreach ($languages as $lang) {
-            $WK_HTL_CHAIN_NAME[$lang['id_lang']] = 'Hotel Managed By Ankush';
+            $WK_HTL_CHAIN_NAME[$lang['id_lang']] = 'Hotel Dominic Parks';
             $WK_HTL_TAG_LINE[$lang['id_lang']] = 'Tofu helvetica leggings tattooed. Skateboard blue bottle green juice, brooklyn cardigan kitsch fap narwhal organic flexitarian.';
             $WK_HTL_SHORT_DESC[$lang['id_lang']] = 'Tofu helvetica leggings tattooed. Skateboard blue bottle green juice, brooklyn cardigan kitsch fap narwhal organic flexitarian.';
         }

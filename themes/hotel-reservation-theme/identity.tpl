@@ -31,12 +31,12 @@
         {$navigationPipe}
     </span>
     <span class="navigation_page">
-        {l s='Personal information'}
+        {l s='Your personal information'}
     </span>
 {/capture}
 <div class="box">
     <h1 class="page-subheading">
-        {l s='Personal information'}
+        {l s='Your personal information'}
     </h1>
 
     {include file="$tpl_dir./errors.tpl"}
@@ -206,7 +206,7 @@
 	<li>
         <a class="btn btn-default button button-small" href="{$link->getPageLink('my-account', true)}">
             <span>
-                <i class="icon-chevron-left"></i>{l s='Back to My account'}
+                <i class="icon-chevron-left"></i>{l s='Back to your account'}
             </span>
         </a>
     </li>

@@ -213,10 +213,10 @@ class AdminOrderRefundRulesController extends ModuleAdminController
         if ($paymentType == '') {
             $this->errors[] = $this->l('Invalid payment type.');
         }
-        if (!$fullPayAmount && floatval($fullPayAmount) != 0) {
+        if (!$fullPayAmount) {
             $this->errors[] = $this->l('Enter deduction value for full payment.');
         }
-        if (!$advPayAmount && floatval($advPayAmount) != 0) {
+        if (!$advPayAmount) {
             $this->errors[] = $this->l('Enter deduction value for advance payment.');
         }
 

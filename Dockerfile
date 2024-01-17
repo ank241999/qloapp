@@ -23,8 +23,8 @@ RUN apt-get update --fix-missing \
     && useradd -m -s /bin/bash ${user} \
     && mkdir -p /home/${user}/www \
 ##Download Qloapps latest version
-    && cd /home/${user}/www && mkdir hotelcommerce 
-COPY ./ /home/${user}/www/hotelcommerce
+    && cd /home/${user}/www && mkdir cslhotel 
+COPY ./ /home/${user}/www/cslhotel
 ##change file permission and ownership
 RUN find /home/${user}/www -type f -exec chmod 644 {} \; \
     && find /home/${user}/www -type d -exec chmod 755 {} \; \
@@ -35,13 +35,13 @@ RUN find /home/${user}/www -type f -exec chmod 644 {} \; \
                 Require all granted  \n\
                 AllowOverride all \n\
                 </Directory>  ' >> /etc/apache2/apache2.conf \
-    && sed -i "s@/var/www/html@/home/${user}/www/hotelcommerce@g" /etc/apache2/sites-enabled/000-default.conf \
+    && sed -i "s@/var/www/html@/home/${user}/www/cslhotel@g" /etc/apache2/sites-enabled/000-default.conf \
 ##install supervisor and setup supervisord.conf file
     && apt-get install -y supervisor \
     && mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY credentials.sh /etc/credentials.sh
 RUN chmod a+x /etc/credentials.sh
-WORKDIR /home/${user}/www/hotelcommerce
+WORKDIR /home/${user}/www/cslhotel
 EXPOSE 3306 80 443
 CMD ["/usr/bin/supervisord"]

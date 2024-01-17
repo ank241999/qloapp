@@ -260,6 +260,7 @@ class HotelRoomTypeFeaturePricing extends ObjectModel
         $hotelRoomType = new HotelRoomType();
         $context = Context::getContext();
         $roomTypeRatesAndInventory = array();
+        $hotelCartBookingData = new HotelCartBookingData();
         $objBookingDetail = new HotelBookingDetail();
         $incr = 0;
         $date_from = date('Y-m-d', strtotime($date_from));
@@ -282,7 +283,7 @@ class HotelRoomTypeFeaturePricing extends ObjectModel
                     $totalAvailableRooms = 0;
                 }
 
-                $roomTypePrice = HotelRoomTypeFeaturePricing::getRoomTypeTotalPrice($id_product, $currentDate, $nextDayDate);
+                $roomTypePrice = $hotelCartBookingData->getRoomTypeTotalPrice($id_product, $currentDate, $nextDayDate);
                 $roomTypeRatesAndInventory[$incr]['date'] = $currentDate;
                 $roomTypeRatesAndInventory[$incr]['room_types'][0]['id'] = $id_product;
                 $roomTypeRatesAndInventory[$incr]['room_types'][0]['rates'] = $roomTypePrice;
@@ -292,7 +293,7 @@ class HotelRoomTypeFeaturePricing extends ObjectModel
                 if ($hotelRoomTypes) {
                     $roomTypeRatesAndInventory[$incr]['date'] = $currentDate;
                     foreach ($hotelRoomTypes as $key => $product) {
-                        $roomTypePrice = HotelRoomTypeFeaturePricing::getRoomTypeTotalPrice(
+                        $roomTypePrice = $hotelCartBookingData->getRoomTypeTotalPrice(
                             $product['id_product'],
                             $currentDate,
                             $nextDayDate
@@ -822,8 +823,8 @@ class HotelRoomTypeFeaturePricing extends ObjectModel
      */
     public function updateGroup($groups)
     {
+        $this->cleanGroups();
         if ($groups && !empty($groups)) {
-            $this->cleanGroups();
             $this->addGroups($groups);
         }
     }

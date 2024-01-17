@@ -38,7 +38,6 @@ $(document).ready(function() {
                     data: {
                         q: word,
                         _: n,
-                        booking_product: '1',
                     },
                     success: function(result) {
                         if (result) {
